@@ -48,4 +48,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Custom WhichKey keymap
+vim.api.nvim_set_keymap('n', '<leader>cm', ':w<CR>:!clang % -o %:r && ./%:r<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>cb', ':w<CR>:!bear -- clang % -o %:r && ./%:r<CR>', { noremap = true, silent = true })
 -- vim: ts=2 sts=2 sw=2 et
