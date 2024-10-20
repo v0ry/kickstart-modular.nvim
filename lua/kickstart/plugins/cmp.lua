@@ -114,6 +114,8 @@ return {
           { name = 'luasnip' },
           { name = 'path' },
           { name = 'copilot' },
+          { name = 'clangd' },
+          { name = 'buffer' },
         },
       }
     end,

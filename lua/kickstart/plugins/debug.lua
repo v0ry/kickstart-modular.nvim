@@ -6,6 +6,8 @@
 -- be extended to other languages as well. That's why it's called
 -- kickstart.nvim and not kitchen-sink.nvim ;)
 
+vim.env.PATH = '/opt/homebrew/opt/llvm/bin:' .. vim.env.PATH
+
 return {
   -- NOTE: Yes, you can install new plugins here!
   'mfussenegger/nvim-dap',
@@ -101,5 +103,36 @@ return {
         detached = vim.fn.has 'win32' == 0,
       },
     }
+
+    -- C and C++ debugging
+    dap.adapters.lldb = {
+      type = 'executable',
+      command = '/opt/homebrew/opt/llvm/bin/lldb-dap', -- Full path
+      -- command = 'lldb-dap', -- If you added lldb-dap to your path
+      name = 'lldb',
+    }
+    dap.configurations.cpp = {
+      {
+        name = 'Launch',
+        type = 'lldb',
+        request = 'launch',
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+        args = {},
+        env = function()
+          local variables = {}
+          for k, v in pairs(vim.fn.environ()) do
+            table.insert(variables, string.format('%s=%s', k, v))
+          end
+          return variables
+        end,
+      },
+    }
+    -- Use the same configuration for C and Rust
+    dap.configurations.c = dap.configurations.cpp
+    dap.configurations.rust = dap.configurations.cpp
   end,
 }

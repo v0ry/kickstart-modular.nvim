@@ -14,36 +14,6 @@ return {
   },
   { 'Bilal2453/luvit-meta', lazy = true },
   {
-    'p00f/clangd_extensions.nvim',
-    lazy = true,
-    config = function() end,
-    opts = {
-      inlay_hints = {
-        inline = false,
-      },
-      ast = {
-        --These require codicons (https://github.com/microsoft/vscode-codicons)
-        role_icons = {
-          type = '',
-          declaration = '',
-          expression = '',
-          specifier = '',
-          statement = '',
-          ['template argument'] = '',
-        },
-        kind_icons = {
-          Compound = '',
-          Recovery = '',
-          TranslationUnit = '',
-          PackExpansion = '',
-          TemplateTypeParm = '',
-          TemplateTemplateParm = '',
-          TemplateParamObject = '',
-        },
-      },
-    },
-  },
-  {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -197,8 +167,7 @@ return {
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        clangd = {},
-        codelldb = {},
+        -- clangd = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -240,7 +209,8 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
-        'clangd',
+        -- 'codelldb', -- Used for debugging C/C++ code
+        -- 'clangd',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
